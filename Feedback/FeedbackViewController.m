@@ -102,6 +102,44 @@
     [actionItem executeAction];
 }
 
+#pragma mark - Actions
+- (void)openInAppStore
+{
+    // Build URL
+    NSString *urlString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @"appID"];
+#warning Use app ID given while configuring the feedback component or something
+    NSURL *urlToOpen = [NSURL URLWithString:urlString];
+    
+    // Open url
+    [[UIApplication sharedApplication] openURL:urlToOpen];
+}
+
+- (void)composeEmail
+{
+    if ([MFMailComposeViewController canSendMail])
+    {
+        // Configure email composer
+        MFMailComposeViewController *controller = [[MFMailComposeViewController alloc] init];
+        controller.mailComposeDelegate = self;
+        [controller setSubject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"]];
+        [controller setToRecipients:@[ @"contact@mycompany.com" ]];
+#warning Use email given while configuring the feedback component or something
+        [controller setMessageBody:[self messageContent] isHTML:NO];
+        
+        // Present email composer
+        [self presentViewController:controller animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Alert view")
+                                                        message:NSLocalizedString(@"An error occured while opening email composer", @"Alert view")
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                              otherButtonTitles:nil] ;
+        [alert show];
+    }
+}
+
 #pragma mark - Utils
 - (void)buildActions
 {
@@ -116,7 +154,7 @@
                                                              image:nil
                                                             action:^{
                                                                 // Open app store
-                                                                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @"1231231231"]]];
+                                                                [self openInAppStore];
                                                             }]];
     
     // Getting started
@@ -137,33 +175,6 @@
     
     // Hold actions
     self.actions = actions;
-}
-
-#pragma mark - Actions
-- (void)composeEmail
-{
-    if ([MFMailComposeViewController canSendMail])
-    {
-        // Configure email composer
-        MFMailComposeViewController *controller = [[MFMailComposeViewController alloc] init];
-        controller.mailComposeDelegate = self;
-        [controller setSubject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"]];
-        [controller setToRecipients:@[ @"contact@mycompany.com" ]];
-#warning USE REAL EMAIL
-        [controller setMessageBody:[self messageContent] isHTML:NO];
-        
-        // Present email composer
-        [self presentViewController:controller animated:YES completion:nil];
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Alert view")
-                                                        message:NSLocalizedString(@"An error occured while opening email composer", @"Alert view")
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
-                                              otherButtonTitles:nil] ;
-        [alert show];
-    }
 }
 
 - (NSString *)messageContent
