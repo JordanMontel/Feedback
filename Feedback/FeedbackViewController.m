@@ -106,8 +106,7 @@
 - (void)openInAppStore
 {
     // Build URL
-    NSString *urlString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @"appID"];
-#warning Use app ID given while configuring the feedback component or something
+    NSString *urlString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", self.appId];
     NSURL *urlToOpen = [NSURL URLWithString:urlString];
     
     // Open url
@@ -122,8 +121,7 @@
         MFMailComposeViewController *controller = [[MFMailComposeViewController alloc] init];
         controller.mailComposeDelegate = self;
         [controller setSubject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"]];
-        [controller setToRecipients:@[ @"contact@mycompany.com" ]];
-#warning Use email given while configuring the feedback component or something
+        [controller setToRecipients:@[ self.contactEmail ]];
         [controller setMessageBody:[self messageContent] isHTML:NO];
         
         // Present email composer
@@ -149,7 +147,7 @@
     __weak FeedbackViewController *weakSelf = self;
     
     // Review
-    if (_userFeeling == UserFeelingHappy)
+    if (_userFeeling == UserFeelingHappy && _appId)
         [actions addObject:[FeedbackActionItem actionItemWithTitle:NSLocalizedString(@"Write a review", @"Feedback actions")
                                                              image:nil
                                                             action:^{
@@ -158,14 +156,13 @@
                                                             }]];
     
     // Getting started
-    if (_userFeeling == UserFeelingConfused)
+    if (_userFeeling == UserFeelingConfused && _gettingStartedGuideBlock)
         [actions addObject:[FeedbackActionItem actionItemWithTitle:NSLocalizedString(@"Getting Started Guide", @"Feedback actions")
                                                              image:nil
-                                                            action:^{
-                                                                // TODO
-                                                            }]];
+                                                            action:_gettingStartedGuideBlock]];
     
     // Email
+    if ((_userFeeling == UserFeelingHappy || _userFeeling == UserFeelingConfused || _userFeeling == UserFeelingUnhappy) && [_contactEmail length])
     [actions addObject:[FeedbackActionItem actionItemWithTitle:NSLocalizedString(@"Contact our team", @"Feedback actions")
                                                          image:nil
                                                         action:^{

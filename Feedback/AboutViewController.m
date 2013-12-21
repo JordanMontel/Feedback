@@ -79,7 +79,7 @@
 {
     // Lazy loading
     if (!_feedbackViewController)
-        _feedbackViewController = [[FeedbackViewController alloc] init];
+        [self configureFeedbackViewController];
     
     // Configure according to selected feeling
     switch (buttonIndex)
@@ -100,6 +100,18 @@
     
     // Push view controller
     [self.navigationController pushViewController:_feedbackViewController animated:YES];
+}
+
+#pragma mark - Configuration
+- (void)configureFeedbackViewController
+{
+    // Create a feedback view controller
+    _feedbackViewController = [[FeedbackViewController alloc] init];
+
+    // Apply configuration
+    _feedbackViewController.appId = _appId;
+    _feedbackViewController.contactEmail = _contactEmail;
+    _feedbackViewController.gettingStartedGuideBlock = _gettingStartedGuideBlock;
 }
 
 #pragma mark - Memory

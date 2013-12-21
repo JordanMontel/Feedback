@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AboutViewController.h"
+#import "GettingStartedGuideViewController.h"
 
 @implementation AppDelegate
 
@@ -18,6 +19,15 @@
     
     // Navigation controller
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:aboutViewController];
+    
+    // Configure about
+    aboutViewController.appId = @"";
+    aboutViewController.contactEmail = @"Cyril Chandelier <contact@gmail.com>";
+    __weak UINavigationController *weakNavigationController = aboutViewController.navigationController;
+    aboutViewController.gettingStartedGuideBlock = ^{
+        [weakNavigationController pushViewController:[[GettingStartedGuideViewController alloc] init] animated:YES];
+    };
+    
     
     // Window
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

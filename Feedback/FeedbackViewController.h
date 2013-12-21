@@ -19,4 +19,9 @@ typedef enum {
 // Feedback feeling
 @property (nonatomic, readwrite) UserFeeling userFeeling;
 
+// Configuration
+@property (nonatomic, strong) NSString *appId;
+@property (nonatomic, strong) NSString *contactEmail;
+@property (nonatomic, strong) void(^gettingStartedGuideBlock)(void);
+
 @end

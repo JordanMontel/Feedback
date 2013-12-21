@@ -8,4 +8,9 @@
 
 @interface AboutViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 
+// Configuration
+@property (nonatomic, strong) NSString *appId;
+@property (nonatomic, strong) NSString *contactEmail;
+@property (nonatomic, strong) void(^gettingStartedGuideBlock)(void);
+
 @end
