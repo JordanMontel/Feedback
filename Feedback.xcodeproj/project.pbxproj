@@ -18,6 +18,7 @@
 		0003E5851864AA8B000FCD77 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0003E5831864AA8B000FCD77 /* FeedbackViewController.xib */; };
 		0003E58A1864AB46000FCD77 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0003E5881864AB46000FCD77 /* AboutViewController.m */; };
 		0003E58B1864AB46000FCD77 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0003E5891864AB46000FCD77 /* AboutViewController.xib */; };
+		0061BBBD1865DB49006A973C /* FeedbackActionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0061BBBC1865DB49006A973C /* FeedbackActionItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		0003E5871864AB46000FCD77 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		0003E5881864AB46000FCD77 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		0003E5891864AB46000FCD77 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
+		0061BBBB1865DB49006A973C /* FeedbackActionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackActionItem.h; sourceTree = "<group>"; };
+		0061BBBC1865DB49006A973C /* FeedbackActionItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackActionItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +149,7 @@
 				0003E5811864AA8B000FCD77 /* FeedbackViewController.h */,
 				0003E5821864AA8B000FCD77 /* FeedbackViewController.m */,
 				0003E5831864AA8B000FCD77 /* FeedbackViewController.xib */,
+				0061BBBA1865DB33006A973C /* FeedbackActionItem */,
 			);
 			name = Feedback;
 			sourceTree = "<group>";
@@ -158,6 +162,15 @@
 				0003E5891864AB46000FCD77 /* AboutViewController.xib */,
 			);
 			name = About;
+			sourceTree = "<group>";
+		};
+		0061BBBA1865DB33006A973C /* FeedbackActionItem */ = {
+			isa = PBXGroup;
+			children = (
+				0061BBBB1865DB49006A973C /* FeedbackActionItem.h */,
+				0061BBBC1865DB49006A973C /* FeedbackActionItem.m */,
+			);
+			name = FeedbackActionItem;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,6 +238,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0061BBBD1865DB49006A973C /* FeedbackActionItem.m in Sources */,
 				0003E5591864AA13000FCD77 /* AppDelegate.m in Sources */,
 				0003E5551864AA13000FCD77 /* main.m in Sources */,
 				0003E58A1864AB46000FCD77 /* AboutViewController.m in Sources */,
@@ -363,6 +377,7 @@
 				0003E5731864AA13000FCD77 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -7,6 +7,7 @@
 //
 
 #import "FeedbackViewController.h"
+#import "FeedbackActionItem.h"
 
 
 
@@ -81,8 +82,21 @@
 #pragma mark - UITableViewDelegate methods
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // Action item
+    FeedbackActionItem *actionItem = [_actions objectAtIndex:indexPath.row];
+    
     // Configure text
-    cell.textLabel.text = [[_actions objectAtIndex:indexPath.row] objectForKey:@"title"];
+    cell.textLabel.text = actionItem.title;
+    cell.imageView.image = actionItem.image;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Action item
+    FeedbackActionItem *actionItem = [_actions objectAtIndex:indexPath.row];
+    
+    // Execute action
+    [actionItem executeAction];
 }
 
 #pragma mark - Utils
@@ -92,20 +106,31 @@
     
     // Review
     if (_userFeeling == UserFeelingHappy)
-        [actions addObject:@{
-                             @"title" : NSLocalizedString(@"Write a review", @"Feedback actions")
-                             }];
+        [actions addObject:[FeedbackActionItem actionItemWithTitle:NSLocalizedString(@"Write a review", @"Feedback actions")
+                                                             image:nil
+                                                            action:^{
+                                                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello world!"
+                                                                                                                message:@"..."
+                                                                                                               delegate:nil
+                                                                                                      cancelButtonTitle:@"OK"
+                                                                                                      otherButtonTitles:nil];
+                                                                [alert show];
+                                                            }]];
     
     // Getting started
     if (_userFeeling == UserFeelingConfused)
-        [actions addObject:@{
-                             @"title" : NSLocalizedString(@"Getting Started Guide", @"Feedback actions")
-                             }];
+        [actions addObject:[FeedbackActionItem actionItemWithTitle:NSLocalizedString(@"Getting Started Guide", @"Feedback actions")
+                                                             image:nil
+                                                            action:^{
+                                                                // TODO
+                                                            }]];
     
     // Email
-    [actions addObject:@{
-                         @"title" : NSLocalizedString(@"Contact our team", @"Feedback actions")
-                         }];
+    [actions addObject:[FeedbackActionItem actionItemWithTitle:NSLocalizedString(@"Contact our team", @"Feedback actions")
+                                                         image:nil
+                                                        action:^{
+                                                            // TODO
+                                                        }]];
     
     // Hold actions
     self.actions = actions;
