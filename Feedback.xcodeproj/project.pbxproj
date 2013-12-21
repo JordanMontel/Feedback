@@ -19,6 +19,7 @@
 		0003E58A1864AB46000FCD77 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0003E5881864AB46000FCD77 /* AboutViewController.m */; };
 		0003E58B1864AB46000FCD77 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0003E5891864AB46000FCD77 /* AboutViewController.xib */; };
 		0061BBBD1865DB49006A973C /* FeedbackActionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0061BBBC1865DB49006A973C /* FeedbackActionItem.m */; };
+		0061BBBF186616C9006A973C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0061BBBE186616C9006A973C /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		0003E5891864AB46000FCD77 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		0061BBBB1865DB49006A973C /* FeedbackActionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackActionItem.h; sourceTree = "<group>"; };
 		0061BBBC1865DB49006A973C /* FeedbackActionItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackActionItem.m; sourceTree = "<group>"; };
+		0061BBBE186616C9006A973C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0061BBBF186616C9006A973C /* MessageUI.framework in Frameworks */,
 				0003E54B1864AA13000FCD77 /* CoreGraphics.framework in Frameworks */,
 				0003E54D1864AA13000FCD77 /* UIKit.framework in Frameworks */,
 				0003E5491864AA13000FCD77 /* Foundation.framework in Frameworks */,
@@ -79,6 +82,7 @@
 		0003E5471864AA13000FCD77 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0061BBBE186616C9006A973C /* MessageUI.framework */,
 				0003E5481864AA13000FCD77 /* Foundation.framework */,
 				0003E54A1864AA13000FCD77 /* CoreGraphics.framework */,
 				0003E54C1864AA13000FCD77 /* UIKit.framework */,

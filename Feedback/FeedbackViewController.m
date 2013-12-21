@@ -92,6 +92,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // Deselect
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     // Action item
     FeedbackActionItem *actionItem = [_actions objectAtIndex:indexPath.row];
     
@@ -104,17 +107,16 @@
 {
     NSMutableArray *actions = [NSMutableArray array];
     
+    // Weak self
+    __weak FeedbackViewController *weakSelf = self;
+    
     // Review
     if (_userFeeling == UserFeelingHappy)
         [actions addObject:[FeedbackActionItem actionItemWithTitle:NSLocalizedString(@"Write a review", @"Feedback actions")
                                                              image:nil
                                                             action:^{
-                                                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello world!"
-                                                                                                                message:@"..."
-                                                                                                               delegate:nil
-                                                                                                      cancelButtonTitle:@"OK"
-                                                                                                      otherButtonTitles:nil];
-                                                                [alert show];
+                                                                // Open app store
+                                                                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @"1231231231"]]];
                                                             }]];
     
     // Getting started
@@ -129,11 +131,86 @@
     [actions addObject:[FeedbackActionItem actionItemWithTitle:NSLocalizedString(@"Contact our team", @"Feedback actions")
                                                          image:nil
                                                         action:^{
-                                                            // TODO
+                                                            // Compose a pre-configured email
+                                                            [weakSelf composeEmail];
                                                         }]];
     
     // Hold actions
     self.actions = actions;
+}
+
+#pragma mark - Actions
+- (void)composeEmail
+{
+    if ([MFMailComposeViewController canSendMail])
+    {
+        // Configure email composer
+        MFMailComposeViewController *controller = [[MFMailComposeViewController alloc] init];
+        controller.mailComposeDelegate = self;
+        [controller setSubject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"]];
+        [controller setToRecipients:@[ @"contact@mycompany.com" ]];
+#warning USE REAL EMAIL
+        [controller setMessageBody:[self messageContent] isHTML:NO];
+        
+        // Present email composer
+        [self presentViewController:controller animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Alert view")
+                                                        message:NSLocalizedString(@"An error occured while opening email composer", @"Alert view")
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                              otherButtonTitles:nil] ;
+        [alert show];
+    }
+}
+
+- (NSString *)messageContent
+{
+    NSMutableString *content = [NSMutableString string];
+    
+    // Find out informations
+    NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    NSString *appShortVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSString *deviceName = [[UIDevice currentDevice] name];
+    NSString *osName = [[UIDevice currentDevice] systemName];
+    NSString *osVersion = [[UIDevice currentDevice] systemVersion];
+    
+    // App version
+    [content appendFormat:@"%@ %@", NSLocalizedString(@"App version:", @"Email content"), appShortVersion];
+    if ([appVersion length])
+        [content appendFormat:@" (%@)", appVersion];
+    
+    // Breath
+    [content appendString:@"\n"];
+    
+    // Device
+    if ([deviceName length])
+        [content appendFormat:@"%@ %@", NSLocalizedString(@"Device:", @"Email content"), deviceName];
+    
+    // Breath
+    [content appendString:@"\n"];
+    
+    // OS name
+    if ([osName length])
+        [content appendFormat:@"%@ %@", NSLocalizedString(@"Operating system:", @"Email content"), osName];
+    
+    // Breath
+    [content appendString:@"\n"];
+    
+    // OS version
+    if ([osVersion length])
+        [content appendFormat:@"%@ %@", NSLocalizedString(@"OS version:", @"Email content"), osVersion];
+    
+    return content;
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate methods
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    // Dismiss email composer
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - KVO
@@ -141,6 +218,7 @@
 {
     if ([keyPath isEqualToString:@"userFeeling"])
     {
+        // Refresh UI
         [self refreshUI];
     }
 }
